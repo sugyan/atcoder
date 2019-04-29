@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int a[100001];
+int a[100001], l[100001], r[100001];
 
 int gcd(int a, int b) {
     return a == 0 ? b : gcd(b % a, a);
@@ -14,32 +14,21 @@ int main() {
     for (int i = 0; i < n; ++i) {
         cin >> a[i];
     }
-    int l = 0, r = n - 1;
-    while (r - l > 3) {
-        int m = (l + r) / 2;
-        int g1 = a[0], g2 = a[m + 1];
-        for (int i = 1; i < m + 1; ++i) {
-            g1 = gcd(g1, a[i]);
-        }
-        for (int i = m + 1; i <= r; ++i) {
-            g2 = gcd(g2, a[i]);
-        }
-        if (g1 < g2) {
-            r = m;
-        } else {
-            l = m + 1;
-        }
+    l[0] = a[0];
+    r[n - 1] = a[n - 1];
+    for (int i = 0; i < n - 1; ++i) {
+        l[i + 1] = gcd(l[i], a[i + 1]);
+        r[n - 1 - i - 1] = gcd(r[n - 1 - i], a[n - 1 - i - 1]);
     }
     int answer = 0;
-    for (int j = l; j <= r; ++j) {
-        int g = a[0];
-        if (j == 0) {
-            g = a[1];
+    for (int i = 0; i < n; ++i) {
+        if (i == 0) {
+            answer = max(answer, r[1]);
+        } else if (i == n - 1) {
+            answer = max(answer, l[n - 2]);
+        } else {
+            answer = max(answer, gcd(l[i - 1], r[i + 1]));
         }
-        for (int i = 0; i < n; ++i) {
-            if (i != j) g = gcd(g, a[i]);
-        }
-        answer = max(answer, g);
     }
     cout << answer << endl;
 }
