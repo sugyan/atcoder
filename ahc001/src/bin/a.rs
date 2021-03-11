@@ -1,4 +1,23 @@
 use proconio::input;
+use std::cmp::Ordering;
+use std::collections::BinaryHeap;
+
+#[derive(PartialEq)]
+struct MinNonNan(f32);
+
+impl Eq for MinNonNan {}
+
+impl PartialOrd for MinNonNan {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        other.0.partial_cmp(&self.0)
+    }
+}
+
+impl Ord for MinNonNan {
+    fn cmp(&self, other: &MinNonNan) -> Ordering {
+        self.partial_cmp(other).unwrap()
+    }
+}
 
 #[derive(Clone, Copy)]
 struct Rect {
@@ -28,7 +47,8 @@ fn main() {
         xyr: [(i32, i32, i32); n],
     };
     let mut v = Vec::new();
-    for (x, y, r) in xyr {
+    let mut bh = BinaryHeap::new();
+    for (i, &(x, y, r)) in xyr.iter().enumerate() {
         v.push((
             Rect {
                 x1: x,
@@ -38,27 +58,40 @@ fn main() {
             },
             r,
         ));
+        bh.push((MinNonNan(1.0 / r as f32), i))
     }
-    for i in 0..n * 1000 {
-        let (mut rect, r) = v[i % n];
-        match (i + i / n) % 4 {
-            0 if rect.x1 >= 10 => rect.x1 -= 10,
-            1 if rect.y1 >= 10 => rect.y1 -= 10,
-            2 if rect.x2 <= 9990 => rect.x2 += 10,
-            3 if rect.y2 <= 9990 => rect.y2 += 10,
-            _ => {}
-        }
-        if rect.score(r) < v[i % n].0.score(r) {
-            continue;
-        }
-        if !(0..n)
-            .filter(|&j| j != i % n)
-            .any(|j| intersect(&v[j].0, &rect))
-        {
-            v[i % n].0 = rect;
+    for _ in 0..10000 {
+        if let Some(&(_, i)) = bh.peek() {
+            for d in 0..4 {
+                let (mut rect, r) = v[i];
+                match d {
+                    0 if rect.x1 >= 10 => rect.x1 -= 10,
+                    1 if rect.y1 >= 10 => rect.y1 -= 10,
+                    2 if rect.x2 <= 9990 => rect.x2 += 10,
+                    3 if rect.y2 <= 9990 => rect.y2 += 10,
+                    _ => {}
+                }
+                if rect.score(r) <= v[i].0.score(r) {
+                    continue;
+                }
+                if (0..n)
+                    .filter(|&j| j != i)
+                    .all(|j| !intersect(&v[j].0, &rect))
+                {
+                    v[i].0 = rect;
+                }
+            }
+            bh.pop();
+            let mut s = v[i].0.size() as f32 / v[i].1 as f32;
+            if let Some(&(MinNonNan(f), _)) = bh.peek() {
+                while s < f {
+                    s *= 1.01;
+                }
+                bh.push((MinNonNan(s), i));
+            }
         }
     }
-    for (rect, _) in v.iter() {
+    for &(rect, _) in &v {
         println!("{} {} {} {}", rect.x1, rect.y1, rect.x2, rect.y2);
     }
 }
