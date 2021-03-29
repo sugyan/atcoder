@@ -8,20 +8,20 @@ fn main() {
         m: usize,
         a: [usize; m],
     }
-    let mut dp = vec![None; n + 1];
-    for &a in &a {
-        dp[a] = Some(0);
+    let mut broken = vec![false; n + 1];
+    for &i in &a {
+        broken[i] = true;
     }
-    dp[0] = Some(1);
+    let mut dp = vec![0; n + 1];
+    dp[0] = 1;
     for i in 1..=n {
-        if dp[i] == Some(0) {
-            continue;
-        }
-        let mut val = dp[i - 1].unwrap_or_default();
-        if i > 1 {
-            val += dp[i - 2].unwrap_or_default();
-        }
-        dp[i] = Some(val % MOD);
+        dp[i] = if broken[i] {
+            0
+        } else if i == 1 {
+            dp[0]
+        } else {
+            (dp[i - 1] + dp[i - 2]) % MOD
+        };
     }
-    println!("{}", dp[n].unwrap());
+    println!("{}", dp[n]);
 }
