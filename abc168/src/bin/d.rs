@@ -14,17 +14,17 @@ fn main() {
     let mut answer = vec![0; n];
     let mut vd = VecDeque::new();
     vd.push_back(0);
-    while let Some(front) = vd.pop_front() {
-        for &n in &graph[front] {
-            if n > 0 && answer[n] == 0 {
-                answer[n] = front + 1;
-                vd.push_back(n);
+    while let Some(curr) = vd.pop_front() {
+        for &next in &graph[curr] {
+            if next > 0 && answer[next] == 0 {
+                answer[next] = curr + 1;
+                vd.push_back(next);
             }
         }
     }
-    if answer[1..].iter().all(|&n| n > 0) {
+    if (1..n).all(|i| answer[i] > 0) {
         println!("Yes");
-        answer[1..].iter().for_each(|&n| println!("{}", n));
+        (1..n).for_each(|i| println!("{}", answer[i]));
     } else {
         println!("No");
     }
