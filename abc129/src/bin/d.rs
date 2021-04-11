@@ -9,50 +9,34 @@ fn main() {
     }
     let mut sum = vec![vec![0; w]; h];
     for i in 0..h {
+        let mut len = 0;
         {
-            let mut len = 0;
             for j in 0..w {
-                if s[i][j] == '#' {
-                    len = 0;
-                } else {
-                    sum[i][j] += len;
-                    len += 1;
-                }
+                len = if s[i][j] == '#' { 0 } else { len + 1 };
+                sum[i][j] += len;
             }
         }
+        len = 0;
         {
-            let mut len = 0;
             for j in (0..w).rev() {
-                if s[i][j] == '#' {
-                    len = 0;
-                } else {
-                    sum[i][j] += len;
-                    len += 1;
-                }
+                len = if s[i][j] == '#' { 0 } else { len + 1 };
+                sum[i][j] += len;
             }
         }
     }
     for j in 0..w {
+        let mut len = 0;
         {
-            let mut len = 0;
             for i in 0..h {
-                if s[i][j] == '#' {
-                    len = 0;
-                } else {
-                    sum[i][j] += len;
-                    len += 1;
-                }
+                len = if s[i][j] == '#' { 0 } else { len + 1 };
+                sum[i][j] += len;
             }
         }
+        len = 0;
         {
-            let mut len = 0;
             for i in (0..h).rev() {
-                if s[i][j] == '#' {
-                    len = 0;
-                } else {
-                    sum[i][j] += len;
-                    len += 1;
-                }
+                len = if s[i][j] == '#' { 0 } else { len + 1 };
+                sum[i][j] += len;
             }
         }
     }
@@ -62,6 +46,6 @@ fn main() {
             .map(|row| row.iter().max().unwrap())
             .max()
             .unwrap()
-            + 1
+            - 3
     );
 }
