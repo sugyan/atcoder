@@ -1,5 +1,4 @@
 use proconio::{fastout, input};
-use std::collections::HashMap;
 
 #[fastout]
 fn main() {
@@ -7,36 +6,28 @@ fn main() {
         n: usize, m: usize,
         uv: [(usize, usize); m],
     }
-    let mut graph = HashMap::new();
+    let mut graph = vec![Vec::new(); n];
     for &(u, v) in &uv {
-        graph.entry(u - 1).or_insert_with(Vec::new).push(v - 1);
-        graph.entry(v - 1).or_insert_with(Vec::new).push(u - 1);
+        graph[u - 1].push(v - 1);
+        graph[v - 1].push(u - 1);
     }
     let mut visited = vec![false; n];
-    let mut answer = 0;
-    for i in 0..n {
-        if dfs(&graph, &mut visited, i, None) {
-            answer += 1;
-        }
-    }
-    println!("{:?}", answer);
+    println!(
+        "{}",
+        (0..n)
+            .filter(|&i| dfs(&graph, &mut visited, i, None))
+            .count()
+    );
 }
 
-fn dfs(
-    graph: &HashMap<usize, Vec<usize>>,
-    visited: &mut Vec<bool>,
-    i: usize,
-    prev: Option<usize>,
-) -> bool {
+fn dfs(graph: &[Vec<usize>], visited: &mut Vec<bool>, i: usize, prev: Option<usize>) -> bool {
     if visited[i] {
         return false;
     }
     visited[i] = true;
-    if let Some(v) = graph.get(&i) {
-        for &j in v {
-            if Some(j) != prev && !dfs(graph, visited, j, Some(i)) {
-                return false;
-            }
+    for &j in &graph[i] {
+        if Some(j) != prev && !dfs(graph, visited, j, Some(i)) {
+            return false;
         }
     }
     true
