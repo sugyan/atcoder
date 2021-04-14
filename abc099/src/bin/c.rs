@@ -1,22 +1,18 @@
 use proconio::{fastout, input};
+use std::iter::successors;
 
 #[fastout]
 fn main() {
     input! {
         n: usize
     }
-    let mut dp = vec![n; n + 1];
-    dp[0] = 0;
+    let mut dp = vec![0; n + 1];
     for i in 1..=n {
-        dp[i] = dp[i].min(dp[i - 1] + 1);
-        (1..)
-            .map(|i| 6_usize.pow(i))
-            .take_while(|&m| m <= i)
-            .for_each(|m| dp[i] = dp[i].min(dp[i - m] + 1));
-        (1..)
-            .map(|i| 9_usize.pow(i))
-            .take_while(|&m| m <= i)
-            .for_each(|m| dp[i] = dp[i].min(dp[i - m] + 1));
+        dp[i] = dp[i - 1] + 1;
+        successors(Some(1), |&j| Some(j * 6).filter(|&j| j <= i))
+            .for_each(|j| dp[i] = dp[i].min(dp[i - j] + 1));
+        successors(Some(1), |&j| Some(j * 9).filter(|&j| j <= i))
+            .for_each(|j| dp[i] = dp[i].min(dp[i - j] + 1));
     }
     println!("{}", dp[n]);
 }
