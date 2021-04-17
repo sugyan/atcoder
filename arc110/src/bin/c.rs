@@ -8,24 +8,22 @@ fn main() {
     }
     let mut used = vec![false; n - 1];
     let mut answer = Vec::new();
-    let mut i = 0;
-    while i < n {
+    'swap: for i in 0..n {
         let mut j = i;
         while j < n && p[j] != (i + 1) as u32 {
             j += 1;
         }
         for k in (i..j).rev() {
             if used[k] {
-                println!("{}", -1);
-                return;
+                answer.clear();
+                break 'swap;
             }
             used[k] = true;
             answer.push(k + 1);
             p.swap(k, k + 1);
         }
-        i += 1;
     }
-    if used.iter().all(|&b| b) {
+    if answer.len() == n - 1 {
         for &a in &answer {
             println!("{}", a);
         }
