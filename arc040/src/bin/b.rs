@@ -7,22 +7,15 @@ fn main() {
         n: usize, r: usize,
         mut s: Chars,
     }
-    let mut i = n - r;
-    while i > 0 && s[i + r - 1] == 'o' {
-        i -= 1;
-    }
-    let mut answer = i;
-    while i > 0 {
-        answer += 1;
-        for j in 0..r {
-            s[i + j] = 'o';
-        }
-        while i > 0 && s[i + r - 1] == 'o' {
-            i -= 1;
+    let mut answer = 0;
+    if let Some(pos) = s.iter().rev().position(|&c| c == '.') {
+        if n - r > pos {
+            answer += n - r - pos;
         }
     }
-    if (0..r).any(|j| s[j] == '.') {
+    while let Some(pos) = s.iter().position(|&c| c == '.') {
         answer += 1;
+        (0..r).for_each(|i| s[(n - 1).min(pos + i)] = 'o');
     }
     println!("{}", answer);
 }
