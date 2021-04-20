@@ -7,55 +7,27 @@ fn main() {
         ab: [(usize, usize); n],
         cd: [(usize, usize); m],
     }
-    let mut grid = vec![vec![None; w]; h];
+    let mut grid = vec![vec![0_u8; w]; h];
     for &(i, j) in &ab {
-        grid[i - 1][j - 1] = Some(true);
+        grid[i - 1][j - 1] = 2;
     }
     for &(i, j) in &cd {
-        grid[i - 1][j - 1] = Some(false);
+        grid[i - 1][j - 1] = 2;
     }
-    let mut reachable = vec![vec![false; w]; h];
-    for i in 0..h {
-        let mut reach = false;
-        for j in 0..w {
-            if let Some(b) = grid[i][j] {
-                reach = b;
-            }
-            if reach {
-                reachable[i][j] = true;
-            }
-        }
-        for j in (0..w).rev() {
-            if let Some(b) = grid[i][j] {
-                reach = b;
-            }
-            if reach {
-                reachable[i][j] = true;
+    let mut answer = n;
+    for &(i, j) in &ab {
+        for d in [0, !0, 0, 1, 0].windows(2) {
+            let mut i = (i - 1).wrapping_add(d[0]);
+            let mut j = (j - 1).wrapping_add(d[1]);
+            while i < h && j < w && grid[i][j] < 2 {
+                if grid[i][j] == 0 {
+                    answer += 1;
+                    grid[i][j] = 1;
+                }
+                i = i.wrapping_add(d[0]);
+                j = j.wrapping_add(d[1]);
             }
         }
     }
-    for j in 0..w {
-        let mut reach = false;
-        for i in 0..h {
-            if let Some(b) = grid[i][j] {
-                reach = b;
-            }
-            if reach {
-                reachable[i][j] = true;
-            }
-        }
-        for i in (0..h).rev() {
-            if let Some(b) = grid[i][j] {
-                reach = b;
-            }
-            if reach {
-                reachable[i][j] = true;
-            }
-        }
-    }
-    let answer = reachable
-        .iter()
-        .map(|row| row.iter().filter(|&b| *b).count())
-        .sum::<usize>();
     println!("{}", answer);
 }
