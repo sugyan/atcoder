@@ -4,11 +4,11 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize,
-        d: [u32; n],
+        d: [i32; n],
     }
-    let sum = d.iter().sum::<u32>();
+    let sum = d.iter().sum::<i32>();
     let max = *d.iter().max().unwrap();
-    let min = if max * 2 > sum { max * 2 - sum } else { 0 };
+    let min = (max * 2 - sum).max(0);
     println!("{}", sum);
     println!("{}", min);
 }
