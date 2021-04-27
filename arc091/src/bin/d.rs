@@ -7,12 +7,8 @@ fn main() {
     }
     let mut answer = 0;
     for b in k + 1..=n {
-        answer += (b - k) * (n / b);
-        if k == 0 {
-            answer += n % b;
-        } else if n % b >= k {
-            answer += n % b - k + 1
-        }
+        answer += (b - k) * (n / b) + if n % b >= k { n % b - k + 1 } else { 0 };
     }
+    answer -= if k == 0 { n } else { 0 };
     println!("{}", answer);
 }
