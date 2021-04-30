@@ -1,32 +1,24 @@
 use proconio::{fastout, input};
 
-fn f(x: u64) -> u64 {
-    let mut sum = 0;
-    let mut x = x;
-    while x > 0 {
-        sum += x % 10;
-        x /= 10;
-    }
-    sum
-}
-
 #[fastout]
 fn main() {
     input! {
         n: u64
     }
     let mut answers = Vec::new();
-    for i in (1..n).rev() {
-        let j = n - i;
-        if i + f(i) == n {
-            answers.push(i);
+    for x in n.max(200) - 200..n {
+        let mut sum = x;
+        let mut y = x;
+        while y > 0 {
+            sum += y % 10;
+            y /= 10;
         }
-        if j as f64 > (i as f64).log10() * 9.0 {
-            break;
+        if sum == n {
+            answers.push(x);
         }
     }
     println!("{}", answers.len());
-    for a in answers.iter().rev() {
+    for a in &answers {
         println!("{}", a);
     }
 }
