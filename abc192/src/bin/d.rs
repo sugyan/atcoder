@@ -4,12 +4,12 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         x: String,
-        m: u128,
+        m: u64,
     }
     let x = x
         .as_bytes()
         .iter()
-        .map(|&b| (b - b'0') as u128)
+        .map(|&b| (b - b'0') as u64)
         .collect::<Vec<_>>();
     if x.len() == 1 {
         println!("{}", if x[0] > m { 0 } else { 1 });
@@ -17,22 +17,15 @@ fn main() {
     }
     let d = x.iter().max().unwrap();
     let (mut lo, mut hi) = (d + 1, m + 1);
-    let is_valid = |n: u128| -> bool {
-        let mut val = 0;
-        for &u in &x {
-            val = val * n + u;
-            if val > m {
-                return false;
-            }
-        }
-        true
-    };
     while lo < hi {
         let mid = (lo + hi) / 2;
-        if is_valid(mid) {
-            lo = mid + 1;
-        } else {
+        if m < x
+            .iter()
+            .fold(0, |acc, &x| acc.saturating_mul(mid).saturating_add(x))
+        {
             hi = mid;
+        } else {
+            lo = mid + 1;
         }
     }
     println!("{}", lo - d - 1);

@@ -6,7 +6,7 @@ use std::collections::BinaryHeap;
 fn main() {
     input! {
         n: usize, m: usize, x: usize, y: usize,
-        abtk: [(usize, usize, u64, u64); m],
+        abtk: [(usize, usize, i64, i64); m],
     }
     let mut graph = vec![Vec::new(); n];
     for &(a, b, t, k) in &abtk {
@@ -22,16 +22,9 @@ fn main() {
         }
         dists[src] = Some(min);
         for &(dst, t, k) in &graph[src] {
-            if dists[dst].is_none() {
-                let wait = if min % k == 0 { 0 } else { k - min % k };
-                bh.push((Reverse(min + wait + t), dst));
-            }
+            let wait = if min % k == 0 { 0 } else { k - min % k };
+            bh.push((Reverse(min + wait + t), dst));
         }
     }
-    let answer = if let Some(d) = dists[y - 1] {
-        d as i64
-    } else {
-        -1
-    };
-    println!("{}", answer);
+    println!("{}", dists[y - 1].unwrap_or(-1));
 }
