@@ -6,7 +6,7 @@ fn main() {
         k: u32,
         a: u32, b: u32,
     }
-    let answer = if k == 1 || a % k == 0 || b % k == 0 || a / k != b / k {
+    let answer = if (a..=b).any(|p| p % k == 0) {
         "OK"
     } else {
         "NG"
