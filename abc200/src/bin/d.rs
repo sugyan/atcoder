@@ -7,24 +7,20 @@ fn main() {
         a: [u32; n],
     }
     let a = a.iter().map(|m| (m % 200) as usize).collect::<Vec<_>>();
-    if let Some(answer) = solve(&a) {
+    if let Some((b, c)) = solve(&a) {
         println!("Yes");
         println!(
             "{} {}",
-            answer.0.len(),
-            answer
-                .0
-                .iter()
+            b.len(),
+            b.iter()
                 .map(|i| (i + 1).to_string())
                 .collect::<Vec<_>>()
                 .join(" ")
         );
         println!(
             "{} {}",
-            answer.1.len(),
-            answer
-                .1
-                .iter()
+            c.len(),
+            c.iter()
                 .map(|i| (i + 1).to_string())
                 .collect::<Vec<_>>()
                 .join(" ")
