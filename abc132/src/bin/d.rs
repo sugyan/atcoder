@@ -2,15 +2,47 @@ use proconio::{fastout, input};
 
 const DIV: u64 = 1_000_000_007;
 
-fn f(n: u64) -> Vec<u64> {
-    let mut v = vec![0; n as usize + 1];
-    v[0] = 1;
-    for i in 0..n as usize {
-        for j in (0..=i).rev() {
-            v[j + 1] = (v[j + 1] + v[j]) % DIV;
+struct Combinations {
+    n: u64,
+    fac: Vec<u64>,
+    inv: Vec<u64>,
+}
+
+impl Combinations {
+    fn new(n: u64) -> Self {
+        let mut fac = vec![1; n as usize + 1];
+        let mut inv = vec![1; n as usize + 1];
+        for i in 1..=n {
+            fac[i as usize] = (fac[i as usize - 1] * i) % DIV;
+        }
+        inv[n as usize] = Self::inv(fac[n as usize]);
+        for i in (0..n).rev() {
+            inv[i as usize] = (inv[i as usize + 1] * (i as u64 + 1)) % DIV;
+        }
+        Self { n, fac, inv }
+    }
+    fn nck_mod(&self, k: u64) -> u64 {
+        if k > self.n {
+            0
+        } else {
+            (self.fac[self.n as usize]
+                * ((self.inv[(self.n - k) as usize] * self.inv[k as usize]) % DIV))
+                % DIV
         }
     }
-    v
+    fn inv(x: u64) -> u64 {
+        let mut ret = 1;
+        let mut k = DIV - 2;
+        let mut y = x;
+        while k > 0 {
+            if k & 1 > 0 {
+                ret = (ret * y) % DIV;
+            }
+            y = (y * y) % DIV;
+            k /= 2;
+        }
+        ret
+    }
 }
 
 #[fastout]
@@ -18,13 +50,9 @@ fn main() {
     input! {
         n: u64, k: u64,
     }
-    let vs = (f(n - k + 1), f(k - 1));
-    for i in 0..k as usize {
-        let answer = if i + 1 < vs.0.len() {
-            (vs.0[i + 1] * vs.1[i]) % DIV
-        } else {
-            0
-        };
-        println!("{}", answer);
+    let c1 = Combinations::new(n - k + 1);
+    let c2 = Combinations::new(k - 1);
+    for i in 0..k {
+        println!("{}", (c1.nck_mod(i + 1) * c2.nck_mod(i)) % DIV);
     }
 }
