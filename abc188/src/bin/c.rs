@@ -6,22 +6,8 @@ fn main() {
         n: usize,
         a: [u32; 1 << n],
     }
-    let mut v = (0..1 << n).collect::<Vec<_>>();
-    for i in 1..n {
-        for j in 0..1 << (n - i) {
-            let lhs = j * (1 << i);
-            let rhs = lhs + (1 << (i - 1));
-            v[lhs] = if a[v[lhs]] > a[v[rhs]] {
-                v[lhs]
-            } else {
-                v[rhs]
-            };
-        }
-    }
-    let answer = if a[v[0]] < a[v[1 << (n - 1)]] {
-        v[0]
-    } else {
-        v[1 << (n - 1)]
-    } + 1;
+    let l = (0..1 << (n - 1)).max_by_key(|&i| a[i]).unwrap();
+    let r = (1 << (n - 1)..1 << n).max_by_key(|&i| a[i]).unwrap();
+    let answer = if a[l] > a[r] { r + 1 } else { l + 1 };
     println!("{}", answer);
 }

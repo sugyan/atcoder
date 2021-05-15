@@ -1,25 +1,23 @@
 use proconio::{fastout, input};
-use std::collections::BTreeMap;
 
 #[fastout]
 fn main() {
     input! {
         n: usize, c: i64,
-        abc: [(usize, usize, i64); n],
+        abc: [(i64, i64, i64); n],
     }
-    let mut btm = BTreeMap::new();
+    let mut v = Vec::with_capacity(n * 2);
     for &(a, b, c) in &abc {
-        *btm.entry(a).or_insert(0) += c;
-        *btm.entry(b + 1).or_insert(0) -= c;
+        v.push((a, c));
+        v.push((b + 1, -c));
     }
+    v.sort();
     let mut sum = 0;
-    let (mut prev, mut cost) = (None, 0);
-    for (&k, &v) in &btm {
-        if let Some(p) = prev {
-            sum += cost.min(c) * (k - p) as i64;
-        }
-        cost += v;
-        prev = Some(k);
+    let (mut prev, mut cost) = (0, 0);
+    for &(i, m) in &v {
+        sum += cost.min(c) * (i - prev);
+        cost += m;
+        prev = i;
     }
     println!("{}", sum);
 }
