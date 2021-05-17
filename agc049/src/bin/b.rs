@@ -17,15 +17,12 @@ fn main() {
         if s[i] != t[i] {
             if let Some(j) = v.pop() {
                 s[j] = '0';
-                answer += (j - i) as i64;
+                answer += j - i;
             } else {
-                answer = -1;
                 break;
             }
+            s[i] = t[i];
         }
     }
-    if s[n - 1] != t[n - 1] {
-        answer = -1;
-    }
-    println!("{}", answer);
+    println!("{}", if s == t { answer as i64 } else { -1 });
 }
