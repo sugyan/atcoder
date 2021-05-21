@@ -8,25 +8,19 @@ fn main() {
         n: usize, k: usize,
         lr: [(usize, usize); k],
     }
-    let mut v = vec![Vec::new(); n];
-    for i in 0..n {
-        for &(l, r) in &lr {
-            if i + l < n {
-                v[i + l].push((i, 1));
-            }
-            if i + r + 1 < n {
-                v[i + r + 1].push((i, -1));
-            }
-        }
-    }
     let mut dp = vec![0_i64; n];
     dp[0] = 1;
-    let mut d = 0;
-    for i in 1..n {
-        for &(j, sign) in &v[i] {
-            d = (d + dp[j] * sign).rem_euclid(DIV);
+    dp[1] = DIV - 1;
+    for i in 0..n - 1 {
+        for &(l, r) in &lr {
+            if i + l < n {
+                dp[i + l] = (dp[i + l] + dp[i]) % DIV;
+            }
+            if i + r + 1 < n {
+                dp[i + r + 1] = (dp[i + r + 1] + DIV - dp[i]) % DIV;
+            }
         }
-        dp[i] = d;
+        dp[i + 1] = (dp[i + 1] + dp[i]) % DIV;
     }
     println!("{}", dp[n - 1]);
 }
