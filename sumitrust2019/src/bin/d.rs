@@ -6,22 +6,17 @@ fn main() {
         _n: usize,
         s: String,
     }
-    let s = s.as_bytes().iter().map(|u| u - b'0').collect::<Vec<_>>();
     let mut answer = 0;
-    for i in 0..=9 {
-        let pi = s.iter().position(|&u| u == i);
-        for j in 0..=9 {
-            let pj = s.iter().rposition(|&u| u == j);
-            match (pi, pj) {
-                (Some(lo), Some(hi)) if lo < hi => {
-                    let mut d = [false; 10];
-                    for k in lo + 1..hi {
-                        d[s[k] as usize] = true;
-                    }
-                    answer += d.iter().filter(|&b| *b).count();
-                }
-                _ => {}
+    for i in 0..1000 {
+        let p = format!("{:03}", i).as_bytes().to_owned();
+        let mut j = 0;
+        for &u in s.as_bytes() {
+            if j < 3 && u == p[j] {
+                j += 1;
             }
+        }
+        if j == 3 {
+            answer += 1;
         }
     }
     println!("{}", answer);
