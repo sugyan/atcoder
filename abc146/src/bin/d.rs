@@ -1,5 +1,18 @@
 use proconio::{fastout, input};
-use std::collections::HashMap;
+
+fn dfs(graph: &[Vec<(usize, usize)>], a: &mut Vec<usize>, i: usize, p: Option<(usize, usize)>) {
+    let mut c = 1;
+    for &(j, k) in &graph[i] {
+        match p {
+            Some((pi, _)) if pi == j => continue,
+            Some((_, pc)) if pc == c => c += 1,
+            _ => {}
+        }
+        a[k] = c;
+        dfs(graph, a, j, Some((i, c)));
+        c += 1;
+    }
+}
 
 #[fastout]
 fn main() {
@@ -8,38 +21,14 @@ fn main() {
         ab: [(usize, usize); n - 1],
     }
     let mut graph = vec![Vec::new(); n];
-    for &(a, b) in &ab {
-        graph[a - 1].push(b - 1);
-        graph[b - 1].push(a - 1);
+    for (i, &(a, b)) in ab.iter().enumerate() {
+        graph[a - 1].push((b - 1, i));
+        graph[b - 1].push((a - 1, i));
     }
-    let mut hm = HashMap::new();
-    let i = (0..n).max_by_key(|&i| graph[i].len()).unwrap();
-    let max = graph[i].len();
-    dfs(&graph, &mut hm, i, None, max);
-    println!("{}", max);
-    for &(a, b) in &ab {
-        if let Some(&answer) = hm.get(&(a - 1, b - 1)) {
-            println!("{}", answer);
-        }
-    }
-}
-
-fn dfs(
-    graph: &[Vec<usize>],
-    hm: &mut HashMap<(usize, usize), usize>,
-    i: usize,
-    prev: Option<(usize, usize)>,
-    max: usize,
-) {
-    let mut k = 1;
-    for &j in &graph[i] {
-        match prev {
-            Some((p, _)) if p == j => continue,
-            _ => {}
-        }
-        let val = (prev.map_or(0, |p| p.1) + k) % max;
-        hm.insert((i.min(j), i.max(j)), val + 1);
-        dfs(graph, hm, j, Some((i, val)), max);
-        k += 1;
+    let mut a = vec![0; n - 1];
+    dfs(&&graph, &mut a, 0, None);
+    println!("{}", a.iter().max().unwrap());
+    for &a in &a {
+        println!("{}", a);
     }
 }
