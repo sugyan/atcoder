@@ -8,17 +8,17 @@ fn main() {
     }
     let mut answers = Vec::new();
     for i in 0..h {
-        let odds = (0..w).filter(|&j| a[i][j] & 1 == 1).collect::<Vec<_>>();
-        for j in 0..odds.len() / 2 {
-            for k in odds[j * 2]..odds[j * 2 + 1] {
-                answers.push((i, k, i, k + 1));
+        for j in 0..w - 1 {
+            if a[i][j] & 1 == 1 {
+                answers.push((i, j, i, j + 1));
+                a[i][j + 1] += 1;
             }
         }
-        if i < h - 1 && odds.len() & 1 == 1 {
-            if let Some(&j) = odds.last() {
-                answers.push((i, j, i + 1, j));
-                a[i + 1][j] += 1;
-            }
+    }
+    for i in 0..h - 1 {
+        if a[i][w - 1] & 1 == 1 {
+            answers.push((i, w - 1, i + 1, w - 1));
+            a[i + 1][w - 1] += 1;
         }
     }
     println!("{}", answers.len());
