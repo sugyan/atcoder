@@ -8,19 +8,8 @@ fn main() {
         s: Chars,
         t: Chars,
     }
-    let mut v = (Vec::new(), Vec::new());
-    for i in 0..n {
-        if s[i] == '0' {
-            v.0.push(i);
-        }
-        if t[i] == '0' {
-            v.1.push(i);
-        }
-    }
-    let answer = if v.0.len() != v.1.len() {
-        -1
-    } else {
-        v.0.iter().zip(v.1.iter()).filter(|i| i.0 != i.1).count() as i32
-    };
-    println!("{}", answer);
+    let s0 = (0..n).filter(|&i| s[i] == '0').collect::<Vec<_>>();
+    let t0 = (0..n).filter(|&i| t[i] == '0').collect::<Vec<_>>();
+    let answer = s0.iter().zip(t0.iter()).filter(|i| i.0 != i.1).count() as i32;
+    println!("{}", if s0.len() == t0.len() { answer } else { -1 });
 }

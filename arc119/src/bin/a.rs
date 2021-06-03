@@ -7,9 +7,7 @@ fn main() {
     }
     let mut answer = n;
     for b in (0..64).filter(|&b| 1 << b <= n) {
-        let a = (n - (1 << b)) / (1 << b) + 1;
-        let c = n - a * (1 << b);
-        answer = answer.min(a + b + c);
+        answer = answer.min(n / (1 << b) + b + n - n / (1 << b) * (1 << b));
     }
     println!("{}", answer);
 }
