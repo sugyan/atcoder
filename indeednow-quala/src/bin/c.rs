@@ -1,5 +1,4 @@
 use proconio::{fastout, input};
-use std::collections::BTreeMap;
 
 #[fastout]
 fn main() {
@@ -7,24 +6,12 @@ fn main() {
         n: usize,
         s: [u32; n],
         q: usize,
-        k: [u32; q],
+        k: [usize; q],
     }
-    let mut btm = BTreeMap::new();
-    for &s in &s {
-        *btm.entry(s).or_insert(0) += 1;
-    }
-    let mut v = Vec::new();
-    let mut sum = 0;
-    for (&key, &val) in btm.iter().rev() {
-        v.push((sum, key + 1));
-        sum += val;
-    }
-    v.push((sum, 1));
+    let mut s = s.iter().filter(|&s| *s > 0).collect::<Vec<_>>();
+    s.sort();
+    s.reverse();
     for &k in &k {
-        let answer = match v.binary_search_by_key(&k, |&(sum, _)| sum) {
-            Ok(i) => v[i].1,
-            Err(i) => v[i - 1].1,
-        };
-        println!("{}", if answer == 1 { 0 } else { answer });
+        println!("{}", if k < s.len() { s[k] + 1 } else { 0 });
     }
 }
