@@ -9,15 +9,8 @@ fn main() {
         println!("-1");
         return;
     }
-    for i in 1..=m {
-        println!("{} {}", i * 2, i * 2 + 1);
+    for i in 0..n - 1 {
+        println!("{} {}", i * 3 + 2, i * 3 + 4);
     }
-    println!("{} {}", (m + 1) * 2, (m + 2) * 2);
-    if n == 1 {
-        return;
-    }
-    println!("1 {}", (m + 1) * 2 + 1);
-    for i in 0..n - m - 2 {
-        println!("{} {}", (m + 2 + i) * 2 + 1, (m + 3 + i) * 2);
-    }
+    println!("1 {}", 3 * (m + 1));
 }
