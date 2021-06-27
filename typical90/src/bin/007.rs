@@ -4,21 +4,19 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize,
-        mut a: [i32; n],
+        mut a: [u32; n],
         q: usize,
-        b: [i32; q],
+        b: [u32; q],
     }
     a.sort_unstable();
     for b in &b {
         let answer = match a.binary_search(b) {
             Ok(_) => 0,
-            Err(i) => {
-                let mut ret = if i == a.len() { b - a[i - 1] } else { a[i] - b };
-                if i > 0 {
-                    ret = ret.min(b - a[i - 1]);
-                }
-                ret
-            }
+            Err(i) => match i {
+                0 => a[0] - b,
+                i if i == a.len() => b - a[i - 1],
+                i => (a[i] - b).min(b - a[i - 1]),
+            },
         };
         println!("{}", answer);
     }
