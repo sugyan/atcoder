@@ -4,40 +4,23 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize,
-        a: [i32; n],
+        mut a: [i32; n],
     }
-    let (mut t, mut f) = (Vec::new(), Vec::new());
-    for &a in &a {
+    a.sort_unstable();
+    let (mut min, mut max) = (a[0], a[n - 1]);
+    let mut ops = Vec::with_capacity(n - 1);
+    for &a in a.iter().skip(1).take(n - 2) {
         if a > 0 {
-            t.push(a);
+            ops.push((min, a));
+            min -= a;
         } else {
-            f.push(a);
+            ops.push((max, a));
+            max -= a;
         }
     }
-    if t.is_empty() {
-        f.sort_unstable();
-        t.push(f.pop().unwrap());
+    println!("{}", max - min);
+    for (x, y) in &ops {
+        println!("{} {}", x, y);
     }
-    if f.is_empty() {
-        t.sort_unstable();
-        t.reverse();
-        f.push(t.pop().unwrap());
-    }
-    println!("{}", t.iter().sum::<i32>() - f.iter().sum::<i32>());
-    let mut m = if t.len() > 1 {
-        let mut m = f.pop().unwrap();
-        while t.len() > 1 {
-            let v = t.pop().unwrap();
-            println!("{} {}", m, v);
-            m -= v;
-        }
-        println!("{} {}", t[0], m);
-        t[0] - m
-    } else {
-        t[0]
-    };
-    for &v in &f {
-        println!("{} {}", m, v);
-        m -= v;
-    }
+    println!("{} {}", max, min);
 }
