@@ -4,15 +4,15 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: u32,
-        mut abc: [u32; 3],
+        abc: [u32; 3],
     }
-    abc.sort_unstable();
     let mut answer = 10_000;
-    for i in 0..=(n / abc[2]).min(9999) {
-        let m = n - i * abc[2];
+    for i in 0..=(n / abc[0]).min(9999) {
+        let m = n - i * abc[0];
         for j in 0..=(m / abc[1]).min(9999 - i) {
-            if (m - j * abc[1]) % abc[0] == 0 {
-                answer = answer.min(i + j + (m - j * abc[1]) / abc[0]);
+            let k = (m - j * abc[1]) / abc[2];
+            if j * abc[1] + k * abc[2] == m {
+                answer = answer.min(i + j + k);
             }
         }
     }
