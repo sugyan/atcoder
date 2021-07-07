@@ -6,13 +6,10 @@ fn main() {
         n: usize, mut k: u64,
         a: [u32; n],
     }
-    let mut answers = vec![k / n as u64; n];
-    let mut v = a.iter().enumerate().collect::<Vec<_>>();
-    v.sort_by_key(|(_, &a)| a);
-    for &(i, _) in v.iter().take(k as usize % n) {
-        answers[i] += 1;
-    }
-    for a in &answers {
-        println!("{}", a);
+    let mut b = a.clone();
+    b.sort_unstable();
+    for &a in &a {
+        let answer = k / n as u64 + if a < b[k as usize % n] { 1 } else { 0 };
+        println!("{}", answer);
     }
 }
