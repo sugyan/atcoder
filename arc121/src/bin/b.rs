@@ -21,27 +21,24 @@ fn main() {
         return;
     }
     rgb.iter_mut().for_each(|v| v.sort_unstable());
-    let mut m = [[0; 3]; 3];
-    for &(i, j) in &[(0, 1), (0, 2), (1, 2)] {
-        let (mut ki, mut kj) = (0, 0);
-        let mut min = match (rgb[i].is_empty(), rgb[j].is_empty()) {
-            (true, false) => rgb[j][0],
-            (false, true) => rgb[i][0],
-            _ => (rgb[i][0] - rgb[j][0]).abs(),
-        };
-        while ki < rgb[i].len() && kj < rgb[j].len() {
-            min = min.min((rgb[i][ki] - rgb[j][kj]).abs());
-            if rgb[i][ki] < rgb[j][kj] {
-                ki += 1;
-            } else {
-                kj += 1;
-            }
+    let m = |i: usize, j: usize| -> i64 {
+        if rgb[i].is_empty() {
+            return rgb[j][0];
         }
-        m[i][j] = min;
-        m[j][i] = min;
-    }
+        if rgb[j].is_empty() {
+            return rgb[i][0];
+        }
+        rgb[i].iter().fold(std::i64::MAX, |acc, x| {
+            acc.min(match rgb[j].binary_search(x) {
+                Ok(_) => 0,
+                Err(k) => (rgb[j][k.max(1) - 1] - x)
+                    .abs()
+                    .min((rgb[j][k.min(rgb[j].len() - 1)] - x).abs()),
+            })
+        })
+    };
     if let Some(e) = rgb.iter().position(|v| v.len() & 1 == 0) {
-        let answer = m[(e + 1) % 3][(e + 2) % 3].min(m[e][(e + 1) % 3] + m[e][(e + 2) % 3]);
+        let answer = m((e + 1) % 3, (e + 2) % 3).min(m(e, (e + 1) % 3) + m(e, (e + 2) % 3));
         println!("{}", answer);
     }
 }
