@@ -7,15 +7,15 @@ fn main() {
         n: usize, m: usize,
         ab: [(usize, usize); m],
     }
-    let mut graph = vec![Vec::new(); n];
+    let mut graph = vec![vec![false; n]; n];
     for &(a, b) in &ab {
-        graph[a - 1].push(b - 1);
-        graph[b - 1].push(a - 1);
+        graph[a - 1][b - 1] = true;
+        graph[b - 1][a - 1] = true;
     }
     let mut answer = 0;
     for mut p in (1..n).permutations(n - 1) {
         p.push(0);
-        if p.windows(2).all(|e| graph[e[0]].contains(&e[1])) {
+        if p.windows(2).all(|e| graph[e[0]][e[1]]) {
             answer += 1;
         }
     }
