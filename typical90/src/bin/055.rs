@@ -7,16 +7,16 @@ fn main() {
         a: [u64; n],
     }
     let mut answer = 0;
-    for i0 in 0..n - 4 {
-        for i1 in i0 + 1..n - 3 {
-            for i2 in i1 + 1..n - 2 {
-                for i3 in i2 + 1..n - 1 {
-                    for i4 in i3 + 1..n {
-                        if [a[i0], a[i1], a[i2], a[i3], a[i4]]
-                            .iter()
-                            .fold(1, |acc, x| (acc * x) % p)
-                            == q
-                        {
+    for i in 0..n - 4 {
+        let val = a[i];
+        for j in i + 1..n - 3 {
+            let val = val * a[j] % p;
+            for k in j + 1..n - 2 {
+                let val = val * a[k] % p;
+                for l in k + 1..n - 1 {
+                    let val = val * a[l] % p;
+                    for m in l + 1..n {
+                        if val * a[m] % p == q {
                             answer += 1;
                         }
                     }
