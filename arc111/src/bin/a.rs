@@ -5,19 +5,15 @@ fn main() {
     input! {
         n: u64, m: u64,
     }
-    println!("{}", pow(10, n, m * m) / m % m);
-}
-
-fn pow(x: u64, y: u64, m: u64) -> u64 {
-    let mut x = x;
-    let mut y = y;
-    let mut ret = 1;
+    let mut x = 10;
+    let mut y = n;
+    let mut z = 1;
     while y > 0 {
         if y & 1 != 0 {
-            ret = (ret * x) % m;
+            z = (z * x) % (m * m);
         }
-        x = (x * x) % m;
+        x = (x * x) % (m * m);
         y >>= 1;
     }
-    ret
+    println!("{}", z / m % m);
 }
