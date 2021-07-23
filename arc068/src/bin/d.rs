@@ -10,21 +10,6 @@ fn main() {
     for &a in &a {
         v[a] += 1;
     }
-    let (mut lo, mut hi) = (0, 100_000);
-    while lo < hi {
-        while lo < hi && v[lo] <= 1 {
-            lo += 1;
-        }
-        while lo < hi && v[hi] <= 1 {
-            hi -= 1;
-        }
-        if v[lo] > 1 || v[hi] > 1 {
-            v[lo] -= 1;
-            v[hi] -= 1;
-        }
-    }
-    while v[lo] > 1 {
-        v[lo] -= 2;
-    }
-    println!("{}", v.iter().sum::<i32>());
+    let k = v.iter().filter(|&m| *m > 0).count();
+    println!("{}", k + k % 2 - 1);
 }
