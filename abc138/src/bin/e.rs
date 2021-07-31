@@ -10,7 +10,7 @@ fn main() {
     for (i, &u) in s.as_bytes().iter().enumerate() {
         index[(u - b'a') as usize].push(i);
     }
-    let mut answer = 0;
+    let mut a = 0;
     let mut i = 0;
     for &u in t.as_bytes() {
         let v = &index[(u - b'a') as usize];
@@ -18,18 +18,15 @@ fn main() {
             println!("-1");
             return;
         }
-        i = match v.binary_search(&i) {
-            Ok(j) => v[j] + 1,
-            Err(j) => {
-                if j < v.len() && i < v[j] {
-                    v[j] + 1
-                } else {
-                    answer += s.len();
-                    v[0] + 1
-                }
-            }
+        let j = match v.binary_search(&i) {
+            Ok(j) => v[j],
+            Err(j) if j < v.len() => v[j],
+            _ => v[0],
         };
+        if j < i {
+            a += s.len();
+        }
+        i = j + 1;
     }
-    answer += i;
-    println!("{}", answer);
+    println!("{}", a + i);
 }
