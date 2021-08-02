@@ -4,19 +4,11 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize,
-        p: [u32; n],
+        p: [usize; n],
     }
-    let mut index = vec![0; n];
-    for (i, &p) in p.iter().enumerate() {
-        index[p as usize - 1] = i;
+    let mut v = vec![0; n + 1];
+    for &p in &p {
+        v[p] = v[p - 1] + 1;
     }
-    let mut dp = vec![1; n];
-    let mut max = 1;
-    for i in 1..n {
-        if index[i - 1] < index[i] {
-            dp[i] = dp[i - 1] + 1;
-            max = max.max(dp[i]);
-        }
-    }
-    println!("{}", n - max);
+    println!("{}", n - v.iter().max().unwrap());
 }
