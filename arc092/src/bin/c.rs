@@ -4,31 +4,17 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize,
-        ab: [(usize, usize); n],
-        cd: [(usize, usize); n],
+        mut ab: [(usize, usize); n],
+        mut cd: [(usize, usize); n],
     }
-    let mut m = vec![vec![false; n]; n];
-    for i in 0..n {
-        for j in 0..n {
-            if ab[i].0 < cd[j].0 && ab[i].1 < cd[j].1 {
-                m[i][j] = true;
-            }
-        }
-    }
+    ab.sort_by_cached_key(|&(_, y)| 2 * n - y);
+    cd.sort_by_cached_key(|&(x, _)| x);
+    let mut used = vec![false; n];
     let mut answer = 0;
-    while m.iter().any(|row| row.iter().any(|&b| b)) {
-        if let Some(i) = (0..n)
-            .filter(|&i| m[i].iter().any(|&b| b))
-            .min_by_key(|&i| m[i].iter().filter(|&b| *b).count())
-        {
-            if let Some(j) = (0..n)
-                .filter(|&j| m[i][j])
-                .min_by_key(|&j| (0..n).filter(|&k| m[k][j]).count())
-            {
-                answer += 1;
-                (0..n).for_each(|k| m[i][k] = false);
-                (0..n).for_each(|k| m[k][j] = false);
-            }
+    for &(c, d) in &cd {
+        if let Some(i) = (0..n).position(|i| !used[i] && ab[i].0 < c && ab[i].1 < d) {
+            answer += 1;
+            used[i] = true;
         }
     }
     println!("{}", answer);
