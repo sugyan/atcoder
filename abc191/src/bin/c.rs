@@ -8,18 +8,9 @@ fn main() {
         s: [Chars; h],
     }
     let mut answer = 0;
-    for i in 1..h {
-        for j in 1..w {
-            let d = [s[i - 1][j - 1], s[i - 1][j], s[i][j - 1], s[i][j]]
-                .iter()
-                .fold((0, 0), |a, &c| {
-                    if c == '#' {
-                        (a.0 + 1, a.1)
-                    } else {
-                        (a.0, a.1 + 1)
-                    }
-                });
-            if d == (1, 3) || d == (3, 1) {
+    for i in 0..h - 1 {
+        for j in 0..w - 1 {
+            if (0..4).filter(|&k| s[i + k / 2][j + k % 2] == '#').count() & 1 > 0 {
                 answer += 1;
             }
         }
