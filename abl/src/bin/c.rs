@@ -7,14 +7,12 @@ fn main() {
         n: usize, m: usize,
         ab: [(usize, usize); m],
     }
+    let mut answer = n - 1;
     let mut uf = UnionFind::new(n);
     for &(a, b) in &ab {
-        uf.union(a - 1, b - 1);
+        if uf.union(a - 1, b - 1) {
+            answer -= 1;
+        }
     }
-    let mut v = vec![false; n];
-    for i in 0..n {
-        v[uf.find(i)] = true;
-    }
-    let answer = v.iter().filter(|&b| *b).count() - 1;
     println!("{}", answer);
 }
