@@ -7,13 +7,15 @@ fn main() {
         mut ab: [(usize, usize); m],
     }
     ab.sort();
-    let mut v = Vec::new();
+    let mut answer = 0;
+    let mut min = 0;
     for &(a, b) in &ab {
-        if let Some(min) = v.last_mut().filter(|min| a < **min) {
-            *min = b.min(*min);
+        if a < min {
+            min = b.min(min);
         } else {
-            v.push(b);
+            answer += 1;
+            min = b;
         }
     }
-    println!("{}", v.len());
+    println!("{}", answer);
 }
