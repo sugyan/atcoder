@@ -3,13 +3,10 @@ use proconio::{fastout, input};
 #[fastout]
 fn main() {
     input! {
-        n: String,
+        n: u64,
     }
-    let len = n.len();
-    let answer = if len % 2 != 0 {
-        10_u32.pow(len as u32 / 2) - 1
-    } else {
-        n[..len / 2].parse::<u32>().unwrap() - if n[..len / 2] > n[len / 2..] { 1 } else { 0 }
-    };
+    let answer = (1..1_000_000)
+        .filter(|i| format!("{}{}", i, i).parse::<u64>().unwrap() <= n)
+        .count();
     println!("{}", answer);
 }
