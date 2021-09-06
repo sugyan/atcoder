@@ -1,18 +1,15 @@
+use proconio::marker::Chars;
 use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
     input! {
-        s: String,
+        s: Chars,
     }
-    let r = s.chars().collect::<Vec<_>>();
     let mut answer = 0;
     for i in 0..10_000 {
-        let mut c = [0; 10];
-        for &u in format!("{:04}", i).as_bytes() {
-            c[(u - b'0') as usize] += 1;
-        }
-        if !(0..10).any(|j| (r[j] == 'o' && c[j] == 0) || (r[j] == 'x' && c[j] > 0)) {
+        let v = [i % 10, i / 10 % 10, i / 100 % 10, i / 1000];
+        if !(0..10).any(|j| (s[j] == 'o' && !v.contains(&j)) || (s[j] == 'x' && v.contains(&j))) {
             answer += 1;
         }
     }
