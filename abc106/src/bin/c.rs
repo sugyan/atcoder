@@ -4,11 +4,9 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         s: String,
-        k: u64,
+        k: usize,
     }
-    let answer = match s.chars().enumerate().find(|&(_, c)| c != '1') {
-        Some((i, c)) if k > i as u64 => c,
-        _ => '1',
-    };
-    println!("{}", answer);
+    if let Some((_, c)) = s.chars().enumerate().find(|&(i, c)| i + 1 == k || c != '1') {
+        println!("{}", c);
+    }
 }
