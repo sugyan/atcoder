@@ -1,22 +1,25 @@
 use proconio::{fastout, input};
+use std::ops::AddAssign;
 
-struct BIT {
-    v: Vec<u64>,
+struct BIT<T> {
+    v: Vec<T>,
 }
 
-impl BIT {
+impl<T: AddAssign + Copy + Default> BIT<T> {
     fn new(n: usize) -> Self {
-        Self { v: vec![0; n + 1] }
+        Self {
+            v: vec![Default::default(); n + 1],
+        }
     }
-    fn add(&mut self, i: usize) {
+    fn add(&mut self, i: usize, val: T) {
         let mut x = i;
         while x < self.v.len() {
-            self.v[x] += 1;
+            self.v[x] += val;
             x += 1 << x.trailing_zeros();
         }
     }
-    fn sum(&self, i: usize) -> u64 {
-        let mut ret = 0;
+    fn sum(&self, i: usize) -> T {
+        let mut ret = Default::default();
         let mut x = i;
         while x > 0 {
             ret += self.v[x];
@@ -36,7 +39,7 @@ fn main() {
     let mut answer = 0;
     for (i, &a) in a.iter().enumerate() {
         answer += i as u64 - bit.sum(a as usize + 1);
-        bit.add(a as usize + 1);
+        bit.add(a as usize + 1, 1);
     }
     for &a in &a {
         println!("{}", answer);
