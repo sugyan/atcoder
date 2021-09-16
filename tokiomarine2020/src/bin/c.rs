@@ -4,32 +4,23 @@ use proconio::{fastout, input};
 fn main() {
     input! {
         n: usize, k: usize,
-        mut a: [usize; n],
+        mut a: [i32; n],
     }
     for _ in 0..k {
-        let mut v = vec![0; n];
-        for (i, &a) in a.iter().enumerate() {
-            v[i.max(a) - a] += 1;
-            if i + a + 1 < n {
-                v[i + a + 1] -= 1;
-            }
+        let mut v = vec![0; n + 1];
+        for (&a, i) in a.iter().zip(0..) {
+            v[(i - a).max(0) as usize] += 1;
+            v[(i + a + 1).min(n as i32) as usize] -= 1;
         }
-        a = v
-            .iter()
-            .scan(0, |state, &x| {
-                *state = n.min((*state as i32 + x) as usize);
-                Some(*state)
-            })
-            .collect();
-        if a.iter().all(|&a| a == n) {
+        for i in 1..=n {
+            v[i] += v[i - 1];
+        }
+        v.pop();
+        if a.iter().all(|&a| a == n as i32) {
             break;
         }
+        a = v;
     }
-    println!(
-        "{}",
-        a.into_iter()
-            .map(|i| i.to_string())
-            .collect::<Vec<_>>()
-            .join(" ")
-    );
+    let answer = a.iter().map(|i| i.to_string()).collect::<Vec<_>>();
+    println!("{}", answer.join(" "));
 }
