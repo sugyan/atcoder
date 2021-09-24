@@ -8,24 +8,15 @@ fn main() {
     }
     let mut answer = 0;
     for i in 0..8 {
+        let s = (0..3)
+            .map(|j| if i & 1 << j == 0 { 1 } else { -1 })
+            .collect::<Vec<_>>();
         let mut v = xyz
             .iter()
-            .enumerate()
-            .map(|(j, w)| {
-                let sum = (0..3)
-                    .map(|k| w[k] * if i & 1 << k == 0 { 1 } else { -1 })
-                    .sum::<i64>();
-                (sum, j)
-            })
+            .map(|w| w.iter().zip(&s).map(|(val, sign)| val * sign).sum::<i64>())
             .collect::<Vec<_>>();
         v.sort();
-        let mut sums = vec![0, 0, 0];
-        for j in 0..m {
-            for (k, &val) in xyz[v[j].1].iter().enumerate() {
-                sums[k] += val;
-            }
-        }
-        answer = answer.max(sums[0].abs() + sums[1].abs() + sums[2].abs());
+        answer = answer.max(v[n - m..].iter().sum::<i64>());
     }
     println!("{}", answer);
 }
