@@ -1,38 +1,20 @@
+use petgraph::unionfind::UnionFind;
 use proconio::{fastout, input};
-use std::collections::{HashMap, HashSet};
 
 #[fastout]
 fn main() {
     input! {
         n: usize,
-        ab: [(u32, u32); n],
+        ab: [(usize, usize); n],
     }
-    let mut hm = HashMap::new();
+    let size = 400_001;
+    let mut uf = UnionFind::new(size);
     for &(a, b) in &ab {
-        hm.entry(a).or_insert_with(HashSet::new).insert(b);
-        hm.entry(b).or_insert_with(HashSet::new).insert(a);
+        uf.union(a, b);
     }
-    let mut v = Vec::new();
-    for (&k, hs) in &hm {
-        if hs.len() == 1 {
-            v.push(k);
-        }
-    }
-    let mut answer = 0;
-    while let Some(last) = v.pop() {
-        let hs = hm.get_mut(&last).unwrap();
-        if hs.len() != 1 {
-            continue;
-        }
-        answer += 1;
-        let i = hs.drain().next().unwrap();
-        if let Some(hs) = hm.get_mut(&i) {
-            hs.remove(&last);
-            if hs.len() == 1 {
-                v.push(i)
-            }
-        }
-    }
-    answer += hm.values().filter(|hs| !hs.is_empty()).count();
+    let (mut nodes, mut edges) = (vec![0; size], vec![0; size]);
+    (0..size).for_each(|i| nodes[uf.find(i)] += 1);
+    ab.iter().for_each(|&(a, _)| edges[uf.find(a)] += 1);
+    let answer = (0..size).map(|i| nodes[i].min(edges[i])).sum::<u32>();
     println!("{}", answer);
 }
