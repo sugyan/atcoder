@@ -3,22 +3,20 @@ use proconio::{fastout, input};
 #[fastout]
 fn main() {
     input! {
-        n: u32,
+        n: u64,
     }
-    let mut v = vec![0; 10];
-    let mut answer = 0;
-    while v.iter().rev().fold(0, |acc, &d| acc * 10 + d) <= n {
-        if [3, 5, 7].iter().all(|d| v.contains(d)) {
-            answer += 1;
-        }
-        for d in v.iter_mut() {
-            if *d == 7 {
-                *d = 3
-            } else {
-                *d += if *d == 0 { 3 } else { 2 };
-                break;
-            }
-        }
-    }
+    let answer = dfs(0, n);
     println!("{}", answer);
+}
+
+fn dfs(m: u64, n: u64) -> u32 {
+    if m > n {
+        return 0;
+    }
+    let mut ret = 0;
+    if ["3", "5", "7"].iter().all(|c| m.to_string().contains(c)) {
+        ret += 1;
+    };
+    [3, 5, 7].iter().for_each(|&d| ret += dfs(m * 10 + d, n));
+    ret
 }
