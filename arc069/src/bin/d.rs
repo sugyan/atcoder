@@ -18,16 +18,12 @@ fn main() {
             let same = matches!((s[i % n], v[i]), ('o', 'S') | ('x', 'W'));
             v.push(if same {
                 v[i - 1]
-            } else if v[i - 1] == 'S' {
-                'W'
             } else {
-                'S'
+                (170 - v[i - 1] as u8) as char
             });
         }
         if v[n] == v[0] && v[n + 1] == v[1] {
-            v.pop();
-            v.pop();
-            return println!("{}", v.iter().collect::<String>());
+            return println!("{}", v[..n].iter().collect::<String>());
         }
     }
     println!("-1");
