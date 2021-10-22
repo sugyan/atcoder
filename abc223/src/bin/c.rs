@@ -9,12 +9,8 @@ fn main() {
     let mut s = ab.iter().map(|&(a, b)| a / b).sum::<f64>() / 2.0;
     let mut answer = 0.0;
     for &(a, b) in &ab {
-        if a / b > s {
-            answer += b * s;
-            break;
-        }
-        answer += a;
-        s -= a / b;
+        answer += a.min(b * s);
+        s -= s.min(a / b);
     }
     println!("{}", answer);
 }
