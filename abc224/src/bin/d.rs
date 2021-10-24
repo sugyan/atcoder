@@ -1,5 +1,5 @@
 use proconio::{fastout, input};
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashSet, VecDeque};
 
 #[fastout]
 fn main() {
@@ -13,27 +13,27 @@ fn main() {
         graph[u - 1].push(v - 1);
         graph[v - 1].push(u - 1);
     }
-    let mut pieces = vec![8; 9];
+    let mut pieces = [8; 9];
     for (i, &p) in p.iter().enumerate() {
         pieces[p - 1] = i;
     }
-    let mut hm = HashMap::new();
+    let mut hs = HashSet::new();
+    hs.insert(pieces);
     let mut vd = VecDeque::new();
-    vd.push_back((pieces, 0, None));
-    while let Some((p, min, prev)) = vd.pop_front() {
-        if hm.contains_key(&p) {
-            continue;
+    vd.push_back((pieces, 0, pieces.iter().position(|&p| p == 8).unwrap()));
+    while let Some((p, min, i)) = vd.pop_front() {
+        if p == [0, 1, 2, 3, 4, 5, 6, 7, 8] {
+            println!("{}", min);
+            return;
         }
-        hm.insert(p.clone(), min);
-        if let Some(i) = p.iter().position(|&p| p == 8) {
-            for &j in &graph[i] {
-                if prev != Some(j) {
-                    let mut pieces = p.clone();
-                    pieces.swap(i, j);
-                    vd.push_back((pieces, min + 1, Some(i)));
-                }
+        for &j in &graph[i] {
+            let mut pieces = p;
+            pieces.swap(i, j);
+            if !hs.contains(&pieces) {
+                hs.insert(pieces);
+                vd.push_back((pieces, min + 1, j));
             }
         }
     }
-    println!("{}", hm.get(&(0..9).collect::<Vec<_>>()).unwrap_or(&-1));
+    println!("-1");
 }
