@@ -1,4 +1,5 @@
-open Core;;
+open Base;;
 
-let f a b = (a + b - 3) / (a - 1) in
-Scanf.scanf "%d %d" f |> Printf.sprintf "%d" |> print_endline
+Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+|> (function [ a; b ] -> (a + b - 3) / (a - 1) | _ -> assert false)
+|> Int.to_string |> Caml.print_endline

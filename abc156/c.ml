@@ -1,4 +1,4 @@
-open Core;;
+open Base;;
 
 let n = Caml.read_float () in
 let x =
@@ -12,4 +12,4 @@ x
 |> List.map ~f:(( - ) m)
 |> List.map ~f:(Fn.flip Int.( ** ) 2)
 |> List.sum (module Int) ~f:Fn.id
-|> Printf.sprintf "%d" |> print_endline
+|> Int.to_string |> Caml.print_endline
