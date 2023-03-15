@@ -9,7 +9,6 @@ fn main() {
         w: [Bytes; n],
     }
     let ok = w.iter().collect::<HashSet<_>>().len() == n
-        && w.windows(2)
-            .all(|w| w[0].iter().last() == w[1].iter().next());
+        && w.windows(2).all(|w| w[0].iter().last() == w[1].first());
     println!("{}", if ok { "Yes" } else { "No" });
 }
