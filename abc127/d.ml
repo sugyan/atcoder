@@ -1,9 +1,9 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y)) in
 let n, m = f () in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let bc = List.range 0 m |> List.map ~f in
 let answer =
@@ -21,4 +21,4 @@ let answer =
        ~finish:Fn.id
   |> fst
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

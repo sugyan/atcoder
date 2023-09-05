@@ -1,10 +1,10 @@
 open Base;;
 
-let n, m = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun n m -> (n, m)) in
+let n, m = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun n m -> (n, m)) in
 let ps =
   List.range 0 m
   |> List.map ~f:(fun _ ->
-         Caml.Scanf.sscanf (Caml.read_line ()) "%d %s" (fun p s -> (p, s)))
+         Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %s" (fun p s -> (p, s)))
 in
 let answer =
   let a = Array.create ~len:n (false, 0) in
@@ -18,4 +18,4 @@ let answer =
 in
 answer
 |> (fun a -> Printf.sprintf "%d %d" (fst a) (snd a))
-|> Caml.print_endline
+|> Stdlib.print_endline

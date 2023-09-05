@@ -1,8 +1,8 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let v =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let f m =
@@ -18,4 +18,4 @@ let answer =
       max (ec + f o) (oc + f e) |> ( - ) n
   | (ec, _), (oc, _) -> n - ec - oc
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

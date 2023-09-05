@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   List.init 26 ~f:(( + ) (Char.to_int 'a'))
   |> List.map ~f:Char.of_int_exn
@@ -8,4 +8,4 @@ let answer =
 in
 answer
 |> (function Some c -> Char.to_string c | _ -> "None")
-|> Caml.print_endline
+|> Stdlib.print_endline

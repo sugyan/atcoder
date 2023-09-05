@@ -1,6 +1,6 @@
 open Base;;
 
-let abcd = Caml.read_line () |> String.to_list in
+let abcd = Stdlib.read_line () |> String.to_list in
 let answer =
   let a =
     List.map abcd ~f:(fun c -> Char.(to_int c - to_int '0', to_string c))
@@ -14,4 +14,4 @@ let answer =
   |> List.find_exn ~f:(fun (x, _) -> x = 7)
   |> snd |> Fn.flip ( ^ ) "=7"
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

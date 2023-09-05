@@ -1,6 +1,6 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y)) in
 let n, q = f () in
 let ab = List.range 0 (n - 1) |> List.map ~f in
 let px = List.range 0 q |> List.map ~f in
@@ -22,4 +22,4 @@ let answer =
   Array.to_list c
 in
 answer |> List.map ~f:Int.to_string |> String.concat ~sep:" "
-|> Caml.print_endline
+|> Stdlib.print_endline

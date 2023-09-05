@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   String.to_list "abcdefghijklmnopqrstuvwxyz"
   |> List.find ~f:(String.mem s |> Fn.non)
@@ -17,4 +17,4 @@ let answer =
           |> ( ^ ) (String.sub s ~pos:0 ~len)
       | _ -> assert false)
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

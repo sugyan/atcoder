@@ -1,8 +1,8 @@
 open Base;;
 
-let _, k = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun n k -> (n, k)) in
+let _, k = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun n k -> (n, k)) in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let h = Hashtbl.create (module Int) in
@@ -12,4 +12,4 @@ let answer =
   |> Fn.flip List.drop k
   |> List.sum (module Int) ~f:Fn.id
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

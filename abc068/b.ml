@@ -1,6 +1,6 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 List.range 0 7 |> List.rev
 |> List.map ~f:(( lsl ) 1)
 |> List.find_exn ~f:(Fn.flip ( <= ) n)

@@ -1,10 +1,10 @@
 open Base;;
 
-let s = Caml.read_line () in
-let q = Caml.read_int () in
+let s = Stdlib.read_line () in
+let q = Stdlib.read_int () in
 let qs =
   List.range 0 q
-  |> List.map ~f:(fun _ -> Caml.read_line () |> String.split ~on:' ')
+  |> List.map ~f:(fun _ -> Stdlib.read_line () |> String.split ~on:' ')
 in
 let answer =
   let f (s, t) = function
@@ -16,4 +16,4 @@ let answer =
   List.fold qs ~init:(String.to_list s |> List.map ~f:String.of_char, []) ~f
   |> fun (s, t) -> String.concat s ^ String.concat (List.rev t)
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   let a = Array.create ~len:(String.length s) 0 in
   let f i (acc, p) x =
@@ -17,4 +17,4 @@ let answer =
   Array.to_list a
 in
 answer |> List.map ~f:Int.to_string |> String.concat ~sep:" "
-|> Caml.print_endline
+|> Stdlib.print_endline

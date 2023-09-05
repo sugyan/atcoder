@@ -1,8 +1,8 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let f _ =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let a = f () in
 let b = f () in
@@ -20,4 +20,4 @@ let answer =
          else Stop (c + List.length nega))
        ~finish:(fun (sum, _) -> if sum < 0 then -1 else n)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

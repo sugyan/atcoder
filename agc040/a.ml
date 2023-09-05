@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   let len = String.length s + 1 in
   let a = Array.create ~len 0 in
@@ -12,4 +12,4 @@ let answer =
   done;
   Array.sum (module Int) a ~f:Fn.id
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

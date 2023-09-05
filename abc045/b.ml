@@ -1,6 +1,6 @@
 open Base;;
 
-let s = List.range 0 3 |> List.map ~f:(fun _ -> Caml.read_line ()) in
+let s = List.range 0 3 |> List.map ~f:(fun _ -> Stdlib.read_line ()) in
 let answer =
   let s = List.to_array s in
   let a = Array.create ~len:3 0 in
@@ -13,4 +13,4 @@ let answer =
   in
   f 0
 in
-answer |> Char.to_string |> Caml.print_endline
+answer |> Char.to_string |> Stdlib.print_endline

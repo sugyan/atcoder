@@ -1,7 +1,7 @@
 open Base;;
 
 let rgb, n =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d %d" (fun r g b n ->
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d %d" (fun r g b n ->
       ([ r; g; b ], n))
 in
 let answer =
@@ -14,4 +14,4 @@ let answer =
   in
   f n rgb
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

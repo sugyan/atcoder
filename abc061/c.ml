@@ -1,6 +1,8 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y)) in
+let f _ =
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y))
+in
 let n, k = f () in
 let ab = List.range 0 n |> List.map ~f in
 let answer =
@@ -10,4 +12,4 @@ let answer =
          if k <= acc + b then Stop a else Continue (acc + b))
        ~finish:Fn.id
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

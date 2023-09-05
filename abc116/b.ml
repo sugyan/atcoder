@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_int () in
+let s = Stdlib.read_int () in
 let answer =
   let f n = if n % 2 = 0 then n / 2 else (3 * n) + 1 in
   let rec loop acc =

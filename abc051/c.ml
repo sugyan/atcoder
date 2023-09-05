@@ -1,7 +1,7 @@
 open Base;;
 
 let sx, sy, tx, ty =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d %d" (fun sx sy tx ty ->
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d %d" (fun sx sy tx ty ->
       (sx, sy, tx, ty))
 in
 let answer =
@@ -22,4 +22,4 @@ let answer =
   ]
   |> String.concat ~sep:""
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

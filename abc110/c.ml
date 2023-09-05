@@ -1,7 +1,7 @@
 open Base;;
 
-let s = Caml.read_line () in
-let t = Caml.read_line () in
+let s = Stdlib.read_line () in
+let t = Stdlib.read_line () in
 let answer =
   let f u =
     let a = Array.create ~len:128 [] in
@@ -11,4 +11,4 @@ let answer =
   in
   Poly.equal (f s) (f t)
 in
-answer |> (function true -> "Yes" | false -> "No") |> Caml.print_endline
+answer |> (function true -> "Yes" | false -> "No") |> Stdlib.print_endline

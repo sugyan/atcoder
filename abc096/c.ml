@@ -1,7 +1,7 @@
 open Base;;
 
-let h, w = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun h w -> (h, w)) in
-let s = List.range 0 h |> List.map ~f:(fun _ -> Caml.read_line ()) in
+let h, w = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun h w -> (h, w)) in
+let s = List.range 0 h |> List.map ~f:(fun _ -> Stdlib.read_line ()) in
 let answer =
   let s = List.to_array s in
   let f (i, j) = i >= 0 && h > i && j >= 0 && w > j && Char.(s.(i).[j] = '#') in
@@ -12,4 +12,4 @@ let answer =
   List.cartesian_product (List.range 0 h) (List.range 0 w)
   |> List.for_all ~f:is_ok
 in
-answer |> (function true -> "Yes" | false -> "No") |> Caml.print_endline
+answer |> (function true -> "Yes" | false -> "No") |> Stdlib.print_endline

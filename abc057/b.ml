@@ -1,7 +1,7 @@
 open Base;;
 
 let read_xy _ =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y))
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y))
 in
 let n, m = read_xy () in
 let ab = List.range 0 n |> List.map ~f:read_xy in
@@ -12,4 +12,4 @@ let answer =
       |> List.stable_sort ~compare:Poly.compare
       |> List.hd_exn |> snd)
 in
-answer |> List.map ~f:Int.to_string |> List.iter ~f:Caml.print_endline
+answer |> List.map ~f:Int.to_string |> List.iter ~f:Stdlib.print_endline

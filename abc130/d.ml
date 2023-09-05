@@ -1,8 +1,8 @@
 open Base;;
 
-let n, k = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun n k -> (n, k)) in
+let n, k = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun n k -> (n, k)) in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let b = Array.create ~len:(n + 1) 0 in
@@ -15,4 +15,4 @@ let answer =
   in
   List.range 0 n |> List.sum (module Int) ~f
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

@@ -1,7 +1,7 @@
 open Base;;
 
-let n = Caml.read_int () in
-let s = List.range 0 n |> List.map ~f:(fun _ -> Caml.read_line ()) in
+let n = Stdlib.read_int () in
+let s = List.range 0 n |> List.map ~f:(fun _ -> Stdlib.read_line ()) in
 let answer =
   let a = [| 0; 0; 0 |] in
   List.iter s ~f:(fun s ->
@@ -18,4 +18,4 @@ let answer =
   (if a.(0) = 0 then m else if a.(1) + a.(2) = 0 then a.(0) - 1 else a.(0) + m)
   |> ( + ) (List.sum (module Int) s ~f)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

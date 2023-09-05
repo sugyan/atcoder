@@ -1,7 +1,7 @@
 open Base;;
 
-let h, w = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun h w -> (h, w)) in
-let s = List.range 0 h |> List.map ~f:(fun _ -> Caml.read_line ()) in
+let h, w = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun h w -> (h, w)) in
+let s = List.range 0 h |> List.map ~f:(fun _ -> Stdlib.read_line ()) in
 let answer =
   let s = List.to_array s in
   let m = Array.make_matrix ~dimx:h ~dimy:w (h + w) in
@@ -20,4 +20,4 @@ let answer =
   done;
   m.(h - 1).(w - 1)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

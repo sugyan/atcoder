@@ -1,11 +1,11 @@
 open Base;;
 
-let _ = Caml.read_int () in
+let _ = Stdlib.read_int () in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let b =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let a = List.to_array a in
@@ -15,4 +15,4 @@ let answer =
       a.(i + 1) <- a.(i + 1) - z;
       acc + y + z)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

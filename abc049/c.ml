@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   let rec f s =
     [ "maerd"; "remaerd"; "esare"; "resare" ]
@@ -11,4 +11,4 @@ let answer =
   in
   f (String.rev s)
 in
-answer |> (function true -> "YES" | false -> "NO") |> Caml.print_endline
+answer |> (function true -> "YES" | false -> "NO") |> Stdlib.print_endline

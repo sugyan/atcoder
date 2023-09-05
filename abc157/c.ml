@@ -1,6 +1,6 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y)) in
 let n, m = f () in
 let sc = List.range 0 m |> List.map ~f in
 let answer =
@@ -13,4 +13,4 @@ let answer =
   | Some s -> Int.of_string s
   | None -> -1
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

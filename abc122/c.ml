@@ -1,8 +1,8 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x y -> (x, y)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x y -> (x, y)) in
 let n, q = f () in
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let lr = List.range 0 q |> List.map ~f in
 let answer =
   let a = Array.create ~len:(n + 1) 0 in
@@ -11,4 +11,4 @@ let answer =
   done;
   List.map lr ~f:(fun (l, r) -> a.(r) - a.(l))
 in
-answer |> List.iter ~f:(Fn.compose Caml.print_endline Int.to_string)
+answer |> List.iter ~f:(Fn.compose Stdlib.print_endline Int.to_string)

@@ -1,8 +1,8 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let b = Array.create ~len:n "" in

@@ -1,7 +1,7 @@
 open Base;;
 
-let a = Caml.read_line () in
-let b = Caml.read_line () in
+let a = Stdlib.read_line () in
+let b = Stdlib.read_line () in
 let answer =
   (compare (String.length a) (String.length b) |> function
    | 0 -> Poly.compare a b
@@ -11,4 +11,4 @@ let answer =
   | 0 -> "EQUAL"
   | _ -> "LESS"
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

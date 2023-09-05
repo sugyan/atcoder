@@ -1,8 +1,8 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let xl =
-  let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun x l -> (x, l)) in
+  let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun x l -> (x, l)) in
   List.range 0 n |> List.map ~f
 in
 let answer =
@@ -12,4 +12,4 @@ let answer =
          if pt > s then (acc, pt) else (1 + acc, t))
   |> fst
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

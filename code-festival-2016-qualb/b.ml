@@ -1,7 +1,7 @@
 open Base;;
 
-let nab = Caml.read_line () in
-let s = Caml.read_line () in
+let nab = Stdlib.read_line () in
+let s = Stdlib.read_line () in
 let solve (a, b) =
   let f (ab, bb) = function
     | 'a' when ab < a + b -> ((ab + 1, bb), true)
@@ -14,4 +14,4 @@ let solve (a, b) =
 in
 nab |> String.split ~on:' ' |> List.map ~f:Int.of_string
 |> (function [ _; a; b ] -> solve (a, b) | _ -> assert false)
-|> List.iter ~f:Caml.print_endline
+|> List.iter ~f:Stdlib.print_endline

@@ -2,7 +2,7 @@ open Base;;
 
 let c =
   let f _ =
-    Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d" (fun c1 c2 c3 ->
+    Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d" (fun c1 c2 c3 ->
         [ c1; c2; c3 ])
   in
   List.range 0 3 |> List.map ~f
@@ -16,4 +16,4 @@ let answer =
   |> List.for_all ~f:(fun l ->
          List.dedup_and_sort l ~compare:Poly.compare |> List.length |> ( = ) 1)
 in
-answer |> (function true -> "Yes" | false -> "No") |> Caml.print_endline
+answer |> (function true -> "Yes" | false -> "No") |> Stdlib.print_endline

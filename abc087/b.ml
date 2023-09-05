@@ -1,9 +1,9 @@
 open Base;;
 
-let a = Caml.read_int () in
-let b = Caml.read_int () in
-let c = Caml.read_int () in
-let x = Caml.read_int () in
+let a = Stdlib.read_int () in
+let b = Stdlib.read_int () in
+let c = Stdlib.read_int () in
+let x = Stdlib.read_int () in
 let answer =
   let rec loop x = function
     | [] -> if x = 0 then 1 else 0
@@ -13,4 +13,4 @@ let answer =
   in
   loop x [ (500, a); (100, b); (50, c) ]
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

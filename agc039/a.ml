@@ -1,7 +1,7 @@
 open Base;;
 
-let s = Caml.read_line () in
-let k = Caml.read_int () in
+let s = Stdlib.read_line () in
+let k = Stdlib.read_int () in
 let answer =
   let g = String.to_list s |> List.group ~break:Char.( <> ) in
   let f = List.for_all ~f:(fun l -> List.length l % 2 = 1) in
@@ -13,4 +13,4 @@ let answer =
     k * List.sum (module Int) g ~f:(fun l -> List.length l / 2)
     |> ( + ) (if c then k - 1 else 0)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

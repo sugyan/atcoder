@@ -1,6 +1,6 @@
 open Base;;
 
-let n, y = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun n y -> (n, y)) in
+let n, y = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun n y -> (n, y)) in
 let answer =
   let a = ref (-1, -1, -1) in
   for i = 0 to n do
@@ -13,4 +13,4 @@ let answer =
 in
 answer
 |> (fun (a, b, c) -> Printf.sprintf "%d %d %d" a b c)
-|> Caml.print_endline
+|> Stdlib.print_endline

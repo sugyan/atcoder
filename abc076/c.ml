@@ -1,7 +1,7 @@
 open Base;;
 
-let s = Caml.read_line () in
-let t = Caml.read_line () in
+let s = Stdlib.read_line () in
+let t = Stdlib.read_line () in
 let answer =
   let sl, tl = String.(length s, length t) in
   let ok a =
@@ -20,4 +20,4 @@ let answer =
   | Some s -> s
   | None -> "UNRESTORABLE"
 in
-answer |> Caml.print_endline
+answer |> Stdlib.print_endline

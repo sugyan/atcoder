@@ -1,6 +1,6 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let answer =
   let a = Array.create ~len:1000 1 in
   let rec f i m =
@@ -13,4 +13,4 @@ let answer =
   List.range 2 (n + 1) |> List.iter ~f:(f 2);
   Array.fold a ~init:1 ~f:(fun acc x -> acc * x % 1_000_000_007)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

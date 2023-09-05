@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   let rec loop c t =
     let f i = if Char.(t.[i] = c || t.[i + 1] = c) then c else t.[i] in
@@ -12,4 +12,4 @@ let answer =
   |> List.map ~f:(Fn.flip loop s)
   |> List.fold ~init:(String.length s) ~f:min
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

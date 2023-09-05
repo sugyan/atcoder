@@ -1,6 +1,6 @@
 open Base;;
 
-let x = Caml.read_int () in
+let x = Stdlib.read_int () in
 let answer =
   let is_prime n =
     let rec loop i =

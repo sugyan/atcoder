@@ -1,7 +1,7 @@
 open Base;;
 
 let a, b, x =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d" (fun a b x -> (a, b, x))
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d" (fun a b x -> (a, b, x))
 in
 let answer =
   List.init 10 ~f:(fun i ->
@@ -9,4 +9,4 @@ let answer =
   |> List.fold ~init:0 ~f:max
   |> min (10 ** 9)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

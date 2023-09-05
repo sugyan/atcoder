@@ -1,10 +1,10 @@
 open Base;;
 
-let _, k = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun n k -> (n, k)) in
+let _, k = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun n k -> (n, k)) in
 let r, s, p =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d" (fun r s p -> (r, s, p))
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d" (fun r s p -> (r, s, p))
 in
-let t = Caml.read_line () in
+let t = Stdlib.read_line () in
 let answer =
   let a = String.to_array t in
   let f i c =
@@ -16,4 +16,4 @@ let answer =
   in
   String.to_list t |> List.mapi ~f |> List.sum (module Int) ~f:Fn.id
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

@@ -1,6 +1,6 @@
 open Base;;
 
-let s = Caml.read_line () in
+let s = Stdlib.read_line () in
 let answer =
   let rec loop i acc =
     if i = 0 then List.hd_exn acc
@@ -12,4 +12,4 @@ let answer =
   in
   loop (String.length s - 1) [ 1; 0; -1 ]
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

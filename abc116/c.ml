@@ -1,8 +1,8 @@
 open Base;;
 
-let _ = Caml.read_int () in
+let _ = Stdlib.read_int () in
 let h =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let f i (j, y) x = if x < y then (i, x) else (j, y) in
@@ -15,4 +15,4 @@ let answer =
   in
   loop 0 h
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

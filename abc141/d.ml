@@ -1,8 +1,8 @@
 open Base;;
 
-let m = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun _ m -> m) in
+let m = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun _ m -> m) in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   let f v = Option.value v ~default:0 + 1 in
@@ -15,4 +15,4 @@ let answer =
   |> Fn.apply_n_times ~n:m g |> Map.to_alist
   |> List.sum (module Int) ~f:(fun (k, v) -> k * v)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

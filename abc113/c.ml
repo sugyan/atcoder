@@ -1,6 +1,6 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun a b -> (a, b)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun a b -> (a, b)) in
 let n, m = f () in
 let py = List.range 0 m |> List.map ~f:(fun _ -> f ()) in
 let answer =
@@ -15,4 +15,4 @@ let answer =
   Array.iteri a ~f;
   Array.to_list b
 in
-answer |> List.iter ~f:Caml.print_endline
+answer |> List.iter ~f:Stdlib.print_endline

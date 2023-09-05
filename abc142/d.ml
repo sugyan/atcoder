@@ -1,6 +1,6 @@
 open Base;;
 
-let a, b = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun a b -> (a, b)) in
+let a, b = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun a b -> (a, b)) in
 let answer =
   let rec gcd x y = if y = 0 then x else gcd y (x % y) in
   let rec f i n acc =
@@ -10,4 +10,4 @@ let answer =
   in
   f 2 (gcd a b) [ 1 ] |> List.dedup_and_sort ~compare |> List.length
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

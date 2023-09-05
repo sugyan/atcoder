@@ -1,8 +1,8 @@
 open Base;;
 
-let _ = Caml.read_int () in
+let _ = Stdlib.read_int () in
 let a =
-  Caml.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
+  Stdlib.read_line () |> String.split ~on:' ' |> List.map ~f:Int.of_string
 in
 let answer =
   List.(
@@ -13,4 +13,4 @@ let answer =
     | l0 :: l1 :: _ -> hd_exn l0 * hd_exn l1
     | _ -> 0)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

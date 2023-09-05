@@ -1,6 +1,6 @@
 open Base;;
 
-let f _ = Caml.Scanf.sscanf (Caml.read_line ()) "%d %d" (fun a b -> (a, b)) in
+let f _ = Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d" (fun a b -> (a, b)) in
 let n, m = f () in
 let xy = List.range 0 m |> List.map ~f in
 let answer =
@@ -13,4 +13,4 @@ let answer =
       if a.(x - 1) = 0 then b.(x - 1) <- false);
   Array.count b ~f:Fn.id
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline

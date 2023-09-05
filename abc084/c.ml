@@ -1,9 +1,9 @@
 open Base;;
 
-let n = Caml.read_int () in
+let n = Stdlib.read_int () in
 let csf =
   let f _ =
-    Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d" (fun c s f -> (c, s, f))
+    Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d" (fun c s f -> (c, s, f))
   in
   List.range 0 (n - 1) |> List.map ~f
 in
@@ -14,4 +14,4 @@ let answer =
   in
   List.init n ~f:(fun i -> List.drop csf i |> g)
 in
-answer |> List.iter ~f:(fun a -> Int.to_string a |> Caml.print_endline)
+answer |> List.iter ~f:(fun a -> Int.to_string a |> Stdlib.print_endline)

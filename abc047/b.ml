@@ -1,7 +1,7 @@
 open Base;;
 
 let f _ =
-  Caml.Scanf.sscanf (Caml.read_line ()) "%d %d %d" (fun x y z -> (x, y, z))
+  Stdlib.Scanf.sscanf (Stdlib.read_line ()) "%d %d %d" (fun x y z -> (x, y, z))
 in
 let w, h, n = f () in
 let xya = List.range 0 n |> List.map ~f in
@@ -15,4 +15,4 @@ let answer =
       | _ -> assert false)
   |> fun (xmin, ymin, xmax, ymax) -> max 0 (xmax - xmin) * (ymax - ymin)
 in
-answer |> Int.to_string |> Caml.print_endline
+answer |> Int.to_string |> Stdlib.print_endline
