@@ -1,0 +1,3 @@
+(executables
+ (names d)
+ (libraries core))
